@@ -135,16 +135,26 @@ def get_documents():
 
     for file in upload_path.iterdir():
 
-        if file.is_file():
+        if not file.is_file():
+            continue
 
-            documents.append(
-                {
-                    "filename": file.name,
-                    "file_type": file.suffix,
-                    "size": round(file.stat().st_size / 1024, 2),
-                    "status": "Indexed",
-                }
-            )
+        try:
+            # Reload document to calculate pages
+            pages = DocumentLoader.load(file)
+            page_count = len(pages)
+
+        except Exception:
+            page_count = 0
+
+        documents.append(
+            {
+                "filename": file.name,
+                "file_type": file.suffix,
+                "pages": page_count,
+                "size": round(file.stat().st_size / 1024, 2),
+                "status": "Indexed",
+            }
+        )
 
     documents.sort(
         key=lambda x: x["filename"].lower()

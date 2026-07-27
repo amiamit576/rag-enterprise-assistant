@@ -6,6 +6,8 @@ import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
 
 export default function Home() {
+  const [collapsed, setCollapsed] = useState(false);
+
   const [messages, setMessages] = useState<
     {
       type: "user" | "assistant";
@@ -17,18 +19,24 @@ export default function Home() {
     <div className="flex h-screen overflow-hidden bg-slate-100">
 
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+      />
 
       {/* Main */}
-      <main className="flex flex-1 flex-col">
+      <main className="flex flex-1 flex-col overflow-hidden">
 
         {/* Navbar */}
-        <Navbar />
+        <Navbar
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+        />
 
         {/* Chat */}
         <section className="flex flex-1 overflow-hidden bg-slate-100">
 
-          <div className="mx-auto flex w-full max-w-6xl flex-col">
+          <div className="mx-auto flex h-full w-full max-w-6xl flex-col">
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-8 py-8">

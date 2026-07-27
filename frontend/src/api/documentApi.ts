@@ -7,6 +7,7 @@ export interface Document {
   file_type: string;
   size: number;
   status: string;
+  pages: number;
 }
 
 export async function uploadDocument(
