@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { askQuestion } from "../../api/chatApi";
+import type { ChatMessage } from "../../types/chat";
 
 interface Props {
-  setMessages: React.Dispatch<React.SetStateAction<any[]>>;
+  setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
 }
 
 export default function ChatInput({
@@ -21,8 +22,9 @@ export default function ChatInput({
     setMessages((prev) => [
       ...prev,
       {
-        type: "user",
-        text: userQuestion,
+        id: crypto.randomUUID(),
+        role: "user",
+        content: userQuestion,
       },
     ]);
 
@@ -34,8 +36,9 @@ export default function ChatInput({
       setMessages((prev) => [
         ...prev,
         {
-          type: "assistant",
-          text: response.answer,
+          id: crypto.randomUUID(),
+          role: "assistant",
+          content: response.answer,
         },
       ]);
     } catch (err) {

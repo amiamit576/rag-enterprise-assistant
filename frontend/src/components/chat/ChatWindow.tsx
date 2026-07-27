@@ -1,8 +1,7 @@
+import type { ChatMessage } from "../../types/chat";
+
 interface Props {
-  messages: {
-    type: "user" | "assistant";
-    text: string;
-  }[];
+  messages: ChatMessage[];
 }
 
 export default function ChatWindow({
@@ -26,23 +25,23 @@ export default function ChatWindow({
 
   return (
     <div className="flex-1 overflow-auto p-6 bg-gray-50">
-      {messages.map((message, index) => (
+      {messages.map((message) => (
         <div
-          key={index}
+          key={message.id}
           className={`mb-4 flex ${
-            message.type === "user"
+            message.role === "user"
               ? "justify-end"
               : "justify-start"
           }`}
         >
           <div
             className={`max-w-xl rounded-lg p-4 ${
-              message.type === "user"
+              message.role === "user"
                 ? "bg-blue-600 text-white"
                 : "bg-white shadow"
             }`}
           >
-            {message.text}
+            {message.content}
           </div>
         </div>
       ))}

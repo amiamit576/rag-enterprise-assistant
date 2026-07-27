@@ -4,16 +4,12 @@ import ChatInput from "../components/chat/ChatInput";
 import ChatWindow from "../components/chat/ChatWindow";
 import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
+import type { ChatMessage } from "../types/chat";
 
 export default function Home() {
   const [collapsed, setCollapsed] = useState(false);
 
-  const [messages, setMessages] = useState<
-    {
-      type: "user" | "assistant";
-      text: string;
-    }[]
-  >([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-100">
@@ -45,10 +41,7 @@ export default function Home() {
 
             {/* Input */}
             <div className="border-t border-slate-200 bg-white px-8 py-6 shadow-lg">
-              <ChatInput
-                messages={messages}
-                setMessages={setMessages}
-              />
+              <ChatInput setMessages={setMessages} />
             </div>
 
           </div>
