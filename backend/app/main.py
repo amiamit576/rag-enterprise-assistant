@@ -11,15 +11,16 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Allowed Frontend Origins
+# Allowed frontend origins
 origins = [
-    "http://localhost:5173",                 # Local Vite
+    "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://rag-enterprise-assistant.vercel.app",
 ]
 
-# Add Netlify URL from environment variable if available
+# Optional: Add custom frontend URL from Render Environment Variables
 frontend_url = os.getenv("FRONTEND_URL")
-if frontend_url:
+if frontend_url and frontend_url not in origins:
     origins.append(frontend_url)
 
 app.add_middleware(
@@ -30,7 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routes
+# API Routes
 app.include_router(document_router, prefix="/api/v1")
 app.include_router(chat_router, prefix="/api/v1")
 
