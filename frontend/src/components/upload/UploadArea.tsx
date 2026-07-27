@@ -3,7 +3,11 @@ import { useRef } from "react";
 
 import { useUploadDocument } from "../documents/useUploadDocument";
 
-export default function UploadArea() {
+interface UploadAreaProps {
+  collapsed?: boolean;
+}
+
+export default function UploadArea({ collapsed = false }: UploadAreaProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadMutation = useUploadDocument();
@@ -38,7 +42,7 @@ export default function UploadArea() {
       <button
         onClick={handleClick}
         disabled={uploadMutation.isPending}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+        className={`flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400 ${collapsed ? "px-3 py-3" : "px-4 py-3"}`}
       >
         {uploadMutation.isPending ? (
           <>
@@ -48,7 +52,7 @@ export default function UploadArea() {
         ) : (
           <>
             <Upload size={18} />
-            Upload Document
+            {!collapsed && "Upload Document"}
           </>
         )}
       </button>

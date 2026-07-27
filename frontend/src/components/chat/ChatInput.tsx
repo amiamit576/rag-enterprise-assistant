@@ -3,12 +3,10 @@ import { Send } from "lucide-react";
 import { askQuestion } from "../../api/chatApi";
 
 interface Props {
-  messages: any[];
   setMessages: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 export default function ChatInput({
-  messages,
   setMessages,
 }: Props) {
   const [question, setQuestion] = useState("");
